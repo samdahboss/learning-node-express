@@ -1,2 +1,8 @@
+const express = require('express')
+const app = express()
 
-console.log(module)
+app.use(express.json())
+
+const logger = require('./logger')
+
+console.log(logger)
