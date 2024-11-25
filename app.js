@@ -27,3 +27,13 @@ emitter.on("MessageLogged", function () {
 
 //Raise an event
 emitter.emit("MessageLogged");
+
+//TASK 1
+
+//Listening for the logging event
+emitter.on("logging", (arg) =>{
+    console.log(arg.data)
+})
+
+//Raising a logging event
+emitter.emit("logging", {data: "just logging a random message for practicing events"})
