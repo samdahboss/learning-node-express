@@ -1,8 +1,29 @@
-const express = require('express')
-const app = express()
+// const express = require('express')
+// const app = express()
 
-app.use(express.json())
+// app.use(express.json())
 
-const logger = require('./logger')
+// const logger = require('./logger')
 
-console.log(logger)
+// logger.logger("Hello world!")
+
+// const path = require('path')
+
+// const pathObject = path.parse(__filename)
+
+// console.log(pathObject)
+
+// const fsmodule = require('fs');
+
+// console.log(fsmodule.readdirSync('./'))
+
+const EventEmitter = require("events");
+const emitter = new EventEmitter();
+
+//Listen for an event
+emitter.on("MessageLogged", function () {
+  console.log("Listener Called");
+});
+
+//Raise an event
+emitter.emit("MessageLogged");
