@@ -3,7 +3,7 @@
 
 // app.use(express.json())
 
-// const logger = require('./logger')
+const logger = require('./logger')
 
 // logger.logger("Hello world!")
 
@@ -21,19 +21,12 @@ const EventEmitter = require("events");
 const emitter = new EventEmitter();
 
 //Listen for an event
-emitter.on("MessageLogged", function () {
+emitter.on("MessageLogged", (arg) => {
   console.log("Listener Called");
 });
 
-//Raise an event
-emitter.emit("MessageLogged");
+// logger.logger.logger('logged message')
 
-//TASK 1
+const logObject = new logger.LoggerClass()
 
-//Listening for the logging event
-emitter.on("logging", (arg) =>{
-    console.log(arg.data)
-})
-
-//Raising a logging event
-emitter.emit("logging", {data: "just logging a random message for practicing events"})
+logObject.logger("many me=fjbv message")
