@@ -12,8 +12,9 @@ app.get('/api/courses',(req, res) =>{
   res.send([1,2,3,4,5])
 });
 
-app.get('/api/courses/:id', (req, res)=>{
-  res.send(req.params)
+app.get('/api/post/:year/:month', (req, res)=>{
+  res.send(req.query)
+  res.end()
 })
 
 //PORT
