@@ -3,7 +3,7 @@
 
 // app.use(express.json())
 
-const logger = require('./logger')
+// const logger = require('./logger')
 
 // logger.logger("Hello world!")
 
@@ -17,16 +17,34 @@ const logger = require('./logger')
 
 // console.log(fsmodule.readdirSync('./'))
 
-const EventEmitter = require("events");
-const emitter = new EventEmitter();
+// const EventEmitter = require("events");
+// const emitter = new EventEmitter();
 
-//Listen for an event
-emitter.on("MessageLogged", (arg) => {
-  console.log("Listener Called");
+// //Listen for an event
+// emitter.on("MessageLogged", (arg) => {
+//   console.log("Listener Called");
+// });
+
+// // logger.logger.logger('logged message')
+
+// const logObject = new logger.LoggerClass()
+
+// logObject.logger("many me=fjbv message")
+
+const http = require("http");
+
+const server = http.createServer((req, res) => {
+  if (req.url === "/") {
+    res.write("Hello World!!!");
+    res.end();
+  }
+
+  if (req.url === "/api/courses") {
+    res.write(JSON.stringify([1, 2, 3,4,5 ]));
+    res.end()
+  }
 });
 
-// logger.logger.logger('logged message')
+server.listen(3000);
 
-const logObject = new logger.LoggerClass()
-
-logObject.logger("many me=fjbv message")
+console.log("Listening on port 3000");
