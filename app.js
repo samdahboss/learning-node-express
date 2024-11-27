@@ -1,50 +1,16 @@
-// const express = require('express')
-// const app = express()
+import express from 'express'
+const app = express()
+import {env} from 'node:process'
 
-// app.use(express.json())
-
-// const logger = require('./logger')
-
-// logger.logger("Hello world!")
-
-// const path = require('path')
-
-// const pathObject = path.parse(__filename)
-
-// console.log(pathObject)
-
-// const fsmodule = require('fs');
-
-// console.log(fsmodule.readdirSync('./'))
-
-// const EventEmitter = require("events");
-// const emitter = new EventEmitter();
-
-// //Listen for an event
-// emitter.on("MessageLogged", (arg) => {
-//   console.log("Listener Called");
-// });
-
-// // logger.logger.logger('logged message')
-
-// const logObject = new logger.LoggerClass()
-
-// logObject.logger("many me=fjbv message")
-
-const http = require("http");
-
-const server = http.createServer((req, res) => {
-  if (req.url === "/") {
-    res.write("Hello World!!!");
-    res.end();
-  }
-
-  if (req.url === "/api/courses") {
-    res.write(JSON.stringify([1, 2, 3,4,5 ]));
-    res.end()
-  }
+app.get('/', (req, res) => {
+  res.send('Hello World!')
 });
 
-server.listen(3000);
+app.get('/api/courses',(req, res) =>{
+  res.send([1,2,3,4,5])
+});
 
-console.log("Listening on port 3000");
+//PORT
+const port = env.PORT || 3000;
+console.log(env.PORT);
+app.listen(port, () => console.log(`Listening on port ${port}...`))
