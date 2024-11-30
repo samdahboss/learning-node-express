@@ -24,8 +24,10 @@ app.get("/api/courses", (req, res) => {
 //RETURN A SINGLE COURSE WITH A GIVEN ID
 app.get("/api/courses/:id", (req, res) => {
   const course = courses.find((c) => c.id === parseInt(req.params.id));
-  if (!course)
+  if (!course) {
     res.status(404).send("The course with the given ID was not found");
+    return;
+  }
   res.send(course);
 });
 
@@ -59,8 +61,10 @@ app.put("/api/courses/:id", (req, res) => {
   // FIND COURSE IN COURSES ARRAY
   //IF COURSE DOESN'T EXIST, RETURN 404 ERROR
   const course = courses.find((c) => c.id === parseInt(req.params.id));
-  if (!course)
+  if (!course) {
     res.status(404).send("The course with the given ID was not found");
+    return;
+  }
 
   //VALIDATE THE COURSE THAT WAS FOUND
   const { error } = validateCourse(req);
@@ -73,6 +77,23 @@ app.put("/api/courses/:id", (req, res) => {
 
   course.name = req.body.name;
   res.send(course);
+});
+
+//DELETE OPERATION
+app.delete("/api/courses/:id", (req, res) => {
+  // FIND COURSE IN COURSES ARRAY
+  //IF COURSE DOESN'T EXIST, RETURN 404 ERROR
+  const course = courses.find((c) => c.id === parseInt(req.params.id));
+  if (!course) {
+    res.status(404).send("The course with the given ID was not found");
+    return;
+  }
+
+  //DELETING THE COURSE
+  const index = courses.indexOf(course);
+  courses.splice(index, 1);
+
+  res.send(courses);
 });
 
 //PORT
