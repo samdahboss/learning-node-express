@@ -12,12 +12,13 @@ const courses = [
   { id: 3, name: "course3" },
 ];
 
+//READ OPERATION
 app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
 app.get("/api/courses", (req, res) => {
-  res.send([1, 2, 3, 4, 5]);
+  res.send(courses);
 });
 
 //RETURN A SINGLE COURSE WITH A GIVEN ID
@@ -36,7 +37,7 @@ const validateCourse = (req) => {
   return schema.validate(req.body);
 };
 
-//ADDING A NEW COURSE TO THE COURSES ARRAY
+//CREATED A NEW COURSE AND ADDED IT TO THE COURSES ARRAY
 app.post("/api/courses", (req, res) => {
   const { error } = validateCourse(req);
   if (error) {
