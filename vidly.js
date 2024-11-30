@@ -55,6 +55,18 @@ app.post("/api/genres", (req, res) => {
   res.send(genres);
 });
 
+//updating a genre
+app.put("/api/genres/:id", (req, res) => {
+  const genre = genres.find((c) => c.genre_id === parseInt(req.params.id));
+  if (!genre)
+    return res.status(404).send("The genre with the given ID was not found");
+
+  const { error } = validateGenre(req);
+  if (error) return res.status(400).send(error.details[0].message);
+
+  genre.genre_name = req.body.genre_name;
+  res.send(genres)
+});
 //PORT
 const port = process.env.VIDLY_PORT || 3000;
 app.listen(port, () => console.log(`Listening on port ${port}...`));
