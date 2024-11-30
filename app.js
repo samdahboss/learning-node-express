@@ -20,6 +20,7 @@ app.get("/api/courses", (req, res) => {
   res.send([1, 2, 3, 4, 5]);
 });
 
+//RETURN A SINGLE COURSE WITH A GIVEN ID
 app.get("/api/courses/:id", (req, res) => {
   const course = courses.find((c) => c.id === parseInt(req.params.id));
   if (!course)
@@ -27,12 +28,13 @@ app.get("/api/courses/:id", (req, res) => {
   res.send(course);
 });
 
+//ADDING A NEW COURSE TO THE COURSES ARRAY
 app.post("/api/courses", (req, res) => {
   const schema = Joi.object({
     name: Joi.string().min(3).required(),
   });
 
-  const result = schema.validate(req.body)
+  const result = schema.validate(req.body);
   console.log(result);
 
   if (result.error) {
@@ -46,8 +48,34 @@ app.post("/api/courses", (req, res) => {
   };
 
   courses.push(course);
-  res.send(courses);
+  res.send(course);
 });
+
+//UPDATING AN EXISTING COURSE
+app.put("/api/courses/:id", (req, res) => {
+  // FIND COURSE IN COURSES ARRAY
+  //IF COURSE DOESN'T EXIST, RETURN 404 ERROR
+  const course = courses.find((c) => c.id === parseInt(req.params.id));
+  if (!course)
+    res.status(404).send("The course with the given ID was not found");
+
+  //VALIDATE THE COURSE THAT WAS FOUND
+  const schema = Joi.object({
+    name: Joi.string().min(3).required(),
+  });
+  const result = schema.validate(req.body);
+
+  //IF THE COURSE IS INVALID RETURN 400 BAD REQUEST
+  if (result.error) {
+    //400 bad request
+    res.status(400).send(result.error.details[0].message);
+    return;
+  }
+
+  course.name = req.body.name;
+  res.send(course);
+});
+
 //PORT
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`Listening on port ${port}...`));
