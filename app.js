@@ -28,18 +28,20 @@ app.get("/api/courses/:id", (req, res) => {
   res.send(course);
 });
 
-//ADDING A NEW COURSE TO THE COURSES ARRAY
-app.post("/api/courses", (req, res) => {
+//CREATED COURSE VALIDATION FUNCTION FOR REUSABLILITY
+const validateCourse = (req) => {
   const schema = Joi.object({
     name: Joi.string().min(3).required(),
   });
+  return schema.validate(req.body);
+};
 
-  const result = schema.validate(req.body);
-  console.log(result);
-
-  if (result.error) {
+//ADDING A NEW COURSE TO THE COURSES ARRAY
+app.post("/api/courses", (req, res) => {
+  const { error } = validateCourse(req);
+  if (error) {
     //400 bad request
-    res.status(400).send(result.error.details[0].message);
+    res.status(400).send(error.details[0].message);
     return;
   }
   const course = {
@@ -60,15 +62,11 @@ app.put("/api/courses/:id", (req, res) => {
     res.status(404).send("The course with the given ID was not found");
 
   //VALIDATE THE COURSE THAT WAS FOUND
-  const schema = Joi.object({
-    name: Joi.string().min(3).required(),
-  });
-  const result = schema.validate(req.body);
-
+  const { error } = validateCourse(req);
   //IF THE COURSE IS INVALID RETURN 400 BAD REQUEST
-  if (result.error) {
+  if (error) {
     //400 bad request
-    res.status(400).send(result.error.details[0].message);
+    res.status(400).send(error.details[0].message);
     return;
   }
 
