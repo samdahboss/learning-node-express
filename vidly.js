@@ -3,8 +3,8 @@ import { config } from "dotenv";
 import Joi from "joi";
 
 config();
-const app = express();
-app.use(express.json());
+const vidlyApi = express();
+vidlyApi.use(express.json());
 
 //genre array
 const genres = [
@@ -25,12 +25,12 @@ const validateGenre = (genre) => {
 };
 
 //return genre array
-app.get("/api/genres", (req, res) => {
+vidlyApi.get("/api/genres", (req, res) => {
   res.send(genres);
 });
 
 //get a specific genre by id
-app.get("/api/genres/:id", (req, res) => {
+vidlyApi.get("/api/genres/:id", (req, res) => {
   const genre = genres.find((c) => c.genre_id === parseInt(req.params.id));
   if (!genre)
     return res.status(404).send("The genre with the given ID was not found");
@@ -42,7 +42,7 @@ app.get("/api/genres/:id", (req, res) => {
 });
 
 //adding a genre to the array
-app.post("/api/genres", (req, res) => {
+vidlyApi.post("/api/genres", (req, res) => {
   const { error } = validateGenre(req);
   if (error) return res.status(400).send(error.details[0].message);
 
@@ -56,7 +56,7 @@ app.post("/api/genres", (req, res) => {
 });
 
 //updating a genre
-app.put("/api/genres/:id", (req, res) => {
+vidlyApi.put("/api/genres/:id", (req, res) => {
   const genre = genres.find((c) => c.genre_id === parseInt(req.params.id));
   if (!genre)
     return res.status(404).send("The genre with the given ID was not found");
@@ -69,7 +69,7 @@ app.put("/api/genres/:id", (req, res) => {
 });
 
 //delete a genre
-app.delete("/api/genres/:id", (req, res) => {
+vidlyApi.delete("/api/genres/:id", (req, res) => {
   const genre = genres.find((c) => c.genre_id === parseInt(req.params.id));
   if (!genre)
     return res.status(404).send("The genre with the given ID was not found");
@@ -81,4 +81,4 @@ app.delete("/api/genres/:id", (req, res) => {
 });
 //PORT
 const port = process.env.VIDLY_PORT || 3000;
-app.listen(port, () => console.log(`Listening on port ${port}...`));
+vidlyApi.listen(port, () => console.log(`Listening on port ${port}...`));
