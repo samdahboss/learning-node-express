@@ -79,6 +79,6 @@ vidlyApi.delete("/api/genres/:id", (req, res) => {
 
   res.send(genres);
 });
-//PORT
+//PORT - gotten from env file
 const port = process.env.VIDLY_PORT || 3000;
 vidlyApi.listen(port, () => console.log(`Listening on port ${port}...`));
