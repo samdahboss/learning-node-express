@@ -24,7 +24,7 @@ const validateGenre = (genre) => {
   return schema.validate(genre.body);
 };
 
-//return genre array
+// return genre array
 vidlyApi.get("/api/genres", (req, res) => {
   res.send(genres);
 });
