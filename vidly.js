@@ -6,7 +6,7 @@ config();
 const vidlyApi = express();
 vidlyApi.use(express.json());
 
-//genre array
+// genre array
 const genres = [
   { genre_id: 1, genre_name: "action" },
   { genre_id: 2, genre_name: "biography" },
