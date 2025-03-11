@@ -23,7 +23,6 @@ const hotels = [
 //function to validate hotel
 const validateHotel = (hotel) => {
   const schema = Joi.object({
-    hotel_id: Joi.number(),
     hotel_name: Joi.string().min(5).required(),
   });
 
@@ -35,34 +34,43 @@ hotelApi.get("/api/hotels", (req, res) => {
   res.send(hotels);
 });
 
-//api to get specidifc hotel
+//api to get specific hotel
 hotelApi.get("/api/hotel/:id", (req, res) => {
   const hotel = hotels.find((h) => h.hotel_id === parseInt(req.params.id));
 
   if (!hotel)
     return res.status(404).send("An Hotel with the given id was not found");
 
-  const {error} = validateHotel(req.body);
-  if (error) return res.status(400).send("Bad request: invalid Hotel");
-
   res.send(hotel);
 });
 
 //api to add a hotel
-hotelApi.post("api/hotels", (req, res)=>{
-    const {error} = validateHotel(req.body);
-    if(error) return res.status(400).send(error.details[0].message);
+hotelApi.post("/api/hotels", (req, res) => {
+  const { error } = validateHotel(req.body);
+  if (error) return res.status(400).send(error.details[0].message);
 
-    const hotel ={
-        hotel_id: hotels.length + 1,
-        hotel_name: req.body.hotel_name
-    }
-    
-    hotels.push(hotel);
-    res.send(hotels);
-})
+  const hotel = {
+    hotel_id: hotels.length + 1,
+    hotel_name: req.body.hotel_name,
+  };
 
+  hotels.push(hotel);
+  res.send(hotel);
+});
 
+//api to update a hotel
+hotelApi.put("/api/hotel/:id", (req, res) => {
+  const hotel = hotels.find((h) => h.hotel_id === parseInt(req.params.id));
+
+  if (!hotel)
+    return res.status(404).send("An Hotel with the given id was not found");
+
+  const { error } = validateHotel(req.body);
+  if (error) return res.status(400).send(error.details[0].message);
+
+  hotel.hotel_name = req.body.hotel_name;
+  res.send(hotel);
+});
 
 const PORT = process.env.HOTEL_PORT || 3000;
 hotelApi.listen(PORT, () => {
