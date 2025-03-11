@@ -10,9 +10,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "config": "^3.3.12",
     "dotenv": "^16.4.5",
     "express": "^4.21.1",
     "helmet": "^8.0.0",
-    "joi": "^17.13.3"
+    "joi": "^17.13.3",
+    "morgan": "^1.10.0"
   }
 }

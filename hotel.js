@@ -1,14 +1,31 @@
 import express from "express";
 import helmet from "helmet";
+import morgan from "morgan";
 import Joi from "joi";
 import log from "./log.js";
 import { config } from "dotenv";
 
 config();
+
+//hotel api express
 const hotelApi = express();
 hotelApi.use(express.json());
-hotelApi.use(helmet());
+hotelApi.use(express.static("public")); //built-in middleware to provide static assets e.g localhost:3000/image.png
 
+//getting the current environment
+console.log(`NODE_ENV: ${process.env.NODE_ENV}`);
+console.log(`hotelApi: ${hotelApi.get("env")}`);
+
+//middlewares
+hotelApi.use(helmet()); //middle ware to secure express applications
+
+if (hotelApi.get("env") === "development") {
+  //optionally use morgan middleware in development only
+  hotelApi.use(morgan("tiny")); // (morgan is for logging api requests to the server)
+  console.log("Morgan Middleware Enabled....");
+}
+
+//custom middleware for logging
 hotelApi.use(log);
 
 // hotel array
