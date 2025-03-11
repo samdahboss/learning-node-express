@@ -1,0 +1,6 @@
+{
+    "name": "Hotel App Api Production",
+    "mail": {
+        "host": "prod-mail-server"
+    }
+}

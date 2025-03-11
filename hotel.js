@@ -4,6 +4,7 @@ import morgan from "morgan";
 import Joi from "joi";
 import log from "./log.js";
 import { config } from "dotenv";
+import AppConfig from 'config';
 
 config();
 
@@ -27,6 +28,11 @@ if (hotelApi.get("env") === "development") {
 
 //custom middleware for logging
 hotelApi.use(log);
+
+//configuration
+console.log("Application Name: " + AppConfig.get("name"));
+console.log("Mail Server: " + AppConfig.get("mail.host"));
+console.log("Mail Password: " + AppConfig.get("mail.password"));
 
 // hotel array
 const hotels = [
@@ -93,6 +99,17 @@ hotelApi.put("/api/hotel/:id", (req, res) => {
   hotel.hotel_name = req.body.hotel_name;
   res.send(hotel);
 });
+
+//api to delete a hotel
+hotelApi.delete("/api/hotel/:id", (req,res)=>{
+  const hotel = hotels.find(h => h.hotel_id === parseInt(req.params.id));
+  if(!hotel) return res.status(404).send('An Hotel with the given id was not found');
+
+  const index = hotels.indexOf(hotel);
+  hotels.splice(index, 1);
+
+  res.send(hotel);
+})
 
 const PORT = process.env.HOTEL_PORT || 3000;
 hotelApi.listen(PORT, () => {
