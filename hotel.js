@@ -1,10 +1,15 @@
 import express from "express";
+import helmet from "helmet";
 import Joi from "joi";
+import log from "./log.js";
 import { config } from "dotenv";
 
 config();
 const hotelApi = express();
 hotelApi.use(express.json());
+hotelApi.use(helmet());
+
+hotelApi.use(log);
 
 // hotel array
 const hotels = [
