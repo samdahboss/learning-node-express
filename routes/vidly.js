@@ -1,6 +1,8 @@
 import express from "express";
 
-config();
+//importing joi for validation
+import Joi from "joi";
+
 export const GenreRouter = express.Router();
 
 // genre array

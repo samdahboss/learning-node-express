@@ -1,5 +1,7 @@
 import express from "express";
 
+//importing joi for validation
+import Joi from "joi";
 
 export const hotelApiRouter = express.Router();
 

@@ -4,9 +4,6 @@ import express from "express";
 import helmet from "helmet";
 import morgan from "morgan";
 
-//importing joi for validation
-import Joi from "joi";
-
 //importing config
 import { config } from "dotenv";
 import AppConfig from "config";
@@ -21,6 +18,7 @@ const dbDebugger = debug("app:db");
 import { hotelApiRouter } from "./routes/hotel.js";
 import { HomeRouter } from "./routes/home.js";
 import { GenreRouter } from "./routes/vidly.js";
+import { CoursesRouter } from "./routes/courses.js";
 
 // express app
 const app = express();
@@ -36,6 +34,7 @@ app.set("views", "./views"); //default
 
 
 app.use("/api/hotels", hotelApiRouter);
+app.use("/api/courses", CoursesRouter);
 app.use("/api/genres", GenreRouter);
 app.use("/", HomeRouter);
 
