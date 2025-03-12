@@ -58,5 +58,5 @@ console.log("Mail Password: " + AppConfig.get("mail.password"));
 
 const PORT = process.env.HOTEL_PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`Hotel API is running on port ${PORT}`);
+  console.log(`App is running on port ${PORT}`);
 });
