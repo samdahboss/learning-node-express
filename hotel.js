@@ -21,8 +21,8 @@ hotelApi.use(express.json());
 hotelApi.use(express.static("public")); //built-in middleware to provide static assets e.g localhost:3000/image.png
 
 //adding templating engine
-app.set("view engine", "pug");
-app.set("views", "./views"); //default
+hotelApi.set("view engine", "pug");
+hotelApi.set("views", "./views"); //default
 
 //getting the current environment
 // console.log(`NODE_ENV: ${process.env.NODE_ENV}`);
@@ -44,9 +44,9 @@ dbDebugger("Connected to the database....");
 hotelApi.use(log);
 
 //configuration
-console.log("Application Name: " + AppConfig.get("name"));
-console.log("Mail Server: " + AppConfig.get("mail.host"));
-console.log("Mail Password: " + AppConfig.get("mail.password"));
+// console.log("Application Name: " + AppConfig.get("name"));
+// console.log("Mail Server: " + AppConfig.get("mail.host"));
+// console.log("Mail Password: " + AppConfig.get("mail.password"));
 
 // hotel array
 const hotels = [
@@ -70,6 +70,10 @@ const validateHotel = (hotel) => {
 
   return schema.validate(hotel);
 };
+
+hotelApi.get("/", (req, res) => {
+  res.render("index", { title: "Hotel API", message: "Welcome to Hotel API" });
+});
 
 //api to get all hotel
 hotelApi.get("/api/hotels", (req, res) => {
