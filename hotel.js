@@ -1,10 +1,17 @@
 import express from "express";
+//importing third party middlewares
 import helmet from "helmet";
 import morgan from "morgan";
+//importing joi for validation
 import Joi from "joi";
 import log from "./log.js";
+//importing config
 import { config } from "dotenv";
 import AppConfig from 'config';
+//importing debugger modules
+import debug from "debug";
+const startupDebugger = debug("app:startup");
+const dbDebugger = debug("app:db");
 
 config();
 
@@ -13,9 +20,13 @@ const hotelApi = express();
 hotelApi.use(express.json());
 hotelApi.use(express.static("public")); //built-in middleware to provide static assets e.g localhost:3000/image.png
 
+//adding templating engine
+app.set("view engine", "pug");
+app.set("views", "./views"); //default
+
 //getting the current environment
-console.log(`NODE_ENV: ${process.env.NODE_ENV}`);
-console.log(`hotelApi: ${hotelApi.get("env")}`);
+// console.log(`NODE_ENV: ${process.env.NODE_ENV}`);
+// console.log(`hotelApi: ${hotelApi.get("env")}`);
 
 //middlewares
 hotelApi.use(helmet()); //middle ware to secure express applications
@@ -23,8 +34,11 @@ hotelApi.use(helmet()); //middle ware to secure express applications
 if (hotelApi.get("env") === "development") {
   //optionally use morgan middleware in development only
   hotelApi.use(morgan("tiny")); // (morgan is for logging api requests to the server)
-  console.log("Morgan Middleware Enabled....");
+  startupDebugger("Morgan Middleware Enabled....");
 }
+
+//db work
+dbDebugger("Connected to the database....");
 
 //custom middleware for logging
 hotelApi.use(log);
