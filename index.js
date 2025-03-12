@@ -39,8 +39,8 @@ app.use("/api/genres", GenreRouter);
 app.use("/", HomeRouter);
 
 //getting the current environment
-// console.log(`NODE_ENV: ${process.env.NODE_ENV}`);
-// console.log(`app: ${app.get("env")}`);
+console.log(`NODE_ENV: ${process.env.NODE_ENV}`);
+console.log(`app: ${app.get("env")}`);
 
 if (app.get("env") === "development") {
   //optionally use morgan middleware in development only
@@ -52,9 +52,9 @@ if (app.get("env") === "development") {
 dbDebugger("Connected to the database....");
 
 //configuration
-// console.log("Application Name: " + AppConfig.get("name"));
-// console.log("Mail Server: " + AppConfig.get("mail.host"));
-// console.log("Mail Password: " + AppConfig.get("mail.password"));
+console.log("Application Name: " + AppConfig.get("name"));
+console.log("Mail Server: " + AppConfig.get("mail.host"));
+console.log("Mail Password: " + AppConfig.get("mail.password"));
 
 const PORT = process.env.HOTEL_PORT || 3000;
 app.listen(PORT, () => {
