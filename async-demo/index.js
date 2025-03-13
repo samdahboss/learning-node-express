@@ -58,7 +58,8 @@ function getCommits(repo) {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       console.log("Fetching commits............");
-      resolve([repo + 1, repo + 2, repo + 3]);
+      // resolve([repo + 1, repo + 2, repo + 3]);
+      reject(new Error("Could not get commits"));
     }, 2000);
   });
 }
