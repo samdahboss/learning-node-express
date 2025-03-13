@@ -1,19 +1,11 @@
 console.log("Before!");
-getUserData(1);
+const userData = getUserData(1);
+userData
+  .then((user) => getUserRepositories(user.githubUsername))
+  .then((repos) => getCommits(repos[0]))
+  .then((commits) => console.log("Commits", commits))
+  .catch((err) => console.log("Error", err.message));
 console.log("After!");
-
-// Callbacks
-function getUserCallback(user) {
-  getUserRepositories(user.githubUsername, getRepoCallback);
-}
-
-function getRepoCallback(repos) {
-  getCommits(repos[0], displayCommits);
-}
-
-function displayCommits(commits) {
-  console.log("Commits", commits);
-}
 
 function getUserData(id) {
   return new Promise((resolve, reject) => {
