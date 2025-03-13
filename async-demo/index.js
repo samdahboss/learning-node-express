@@ -22,10 +22,14 @@ function displayCommits(commits) {
 
 //Async/Await Approach
 (async () => {
-  const user = await getUserData(1);
-  const repos = await getUserRepositories(user.githubUsername);
-  const commits = await getCommits(repos[0]);
-  console.log("Commits", commits);
+  try {
+    const user = await getUserData(1);
+    const repos = await getUserRepositories(user.githubUsername);
+    const commits = await getCommits(repos[0]);
+    console.log("Commits", commits);
+  } catch (err) {
+    console.log("Error", err.message);
+  }
 })();
 console.log("After!");
 
