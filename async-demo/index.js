@@ -1,5 +1,5 @@
 console.log("Before!");
-getUserData(1, getUserCallback);
+getUserData(1);
 console.log("After!");
 
 // Callbacks
@@ -15,26 +15,32 @@ function displayCommits(commits) {
   console.log("Commits", commits);
 }
 
-function getUserData(id, callback) {
-  setTimeout(() => {
-    console.log("Reading user data from db.................");
-    callback({
-      id: id,
-      githubUsername: "wumicodes",
-    });
-  }, 2000);
+function getUserData(id) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      console.log("Reading user data from db.................");
+      resolve({
+        id: id,
+        githubUsername: "wumicodes",
+      });
+    }, 2000);
+  });
 }
 
-function getUserRepositories(username, callback) {
-  setTimeout(() => {
-    console.log("Fetching user Repositories............");
-    callback([username + 1, username + 2, username + 3]);
-  }, 2000);
+function getUserRepositories(username) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      console.log("Fetching user Repositories............");
+      resolve([username + 1, username + 2, username + 3]);
+    }, 2000);
+  });
 }
 
-function getCommits(repo, callback) {
-  setTimeout(() => {
-    console.log("Fetching commits............");
-    callback([repo + 1, repo + 2, repo + 3]);
-  }, 2000);
+function getCommits(repo) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      console.log("Fetching commits............");
+      resolve([repo + 1, repo + 2, repo + 3]);
+    }, 2000);
+  });
 }
