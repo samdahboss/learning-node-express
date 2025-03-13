@@ -1,10 +1,11 @@
 console.log("Before!");
-const userData = getUserData(1);
-userData
+
+getUserData(1)
   .then((user) => getUserRepositories(user.githubUsername))
   .then((repos) => getCommits(repos[0]))
   .then((commits) => console.log("Commits", commits))
   .catch((err) => console.log("Error", err.message));
+
 console.log("After!");
 
 function getUserData(id) {
