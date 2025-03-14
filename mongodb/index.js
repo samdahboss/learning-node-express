@@ -219,14 +219,18 @@ const getHotels = async () => {
   //lte (less than or equal to)
   //in
   //nin (not in)
+  //or
+  //and
 
   const hotels = await Hotel.find({
-    category: "5 Star",
-    price: { $gte: 150, $lte: 700 },
+    $or: [
+      { category: "4 Star", price: { $gte: 150, $lte: 1000 } },
+      { owner: "Alice Johnson" },
+    ],
   })
     .limit(10)
     .sort({ price: 1 })
-    .select({ name: 1, address: 1, category: 1, price: 1 });
+    .select({ name: 1, address: 1, category: 1, price: 1, owner: 1 });
   console.log(hotels);
 };
 
