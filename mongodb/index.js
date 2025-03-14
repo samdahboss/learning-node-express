@@ -35,14 +35,17 @@ const createHotel = async (name, address, owner, category, tags) => {
   console.log(result);
 };
 
-// createHotel("Skyview Hotel", "Lagos", "Jesujoba", "5 Star", [
+// createHotel("Indiana Hotel", "Ondo", "Ned Okonkwo", "4 Star", [
 //   "Luxury",
 //   "Expensive",
 // ]);
 
 const getHotels = async () => {
-    const hotels = await Hotel.find();
-    console.log(hotels);
-}
+  const hotels = await Hotel.find({ category: "4 Star" })
+    .limit(10)
+    .sort({ name: 1 })
+    .select({ name: 1, address: 1, category: 1 });
+  console.log(hotels);
+};
 
 getHotels();
