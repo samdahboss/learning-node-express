@@ -34,10 +34,13 @@ const AddCourse = async (name, price, tags, isPublished, author) => {
 // AddCourse("My Courses", 10000, ["best-seller"], true, "Olawumi Samuel");
 
 const getCourses = async () => {
-  const courses = await Course.find({ tags: "backend", isPublished: true })
+  const courses = await Course.find({
+    isPublished: true,
+  })
+    .or([{ tags: "backend" }, { tags: "frontend" }])
     .limit(10)
-    .sort({ name: 1 })
-    .select({ name: 1, author: 1 });
+    .sort("-price")
+    .select("name author");
 
   console.log(courses);
 };
