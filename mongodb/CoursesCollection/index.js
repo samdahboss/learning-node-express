@@ -37,12 +37,32 @@ const getCourses = async () => {
   const courses = await Course.find({
     isPublished: true,
   })
-    .or([{ tags: "backend" }, { tags: "frontend" }])
+    .or([{ price: { $gte: 15 } }, { name: /.*by.*/ }])
     .limit(10)
     .sort("-price")
-    .select("name author");
+    .select("name author price");
 
   console.log(courses);
 };
 
-getCourses();
+// getCourses();
+
+const updateCourse = async (id) => {
+  const course = await Course.findById(id);
+  if (!course) return "Course not found";
+
+  //   course.isPublished = true;
+  //   course.author = "Another Author";
+
+  course.set({
+    name: "Software Development",
+    isPublished: true,
+    author: "WumiCodes",
+    price: 200,
+  });
+
+  const updatedCourse = await course.save();
+  console.log(updatedCourse);
+};
+
+updateCourse("67d575d300b416d58c3379bd");
