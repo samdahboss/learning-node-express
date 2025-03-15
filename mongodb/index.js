@@ -232,7 +232,9 @@ const getHotels = async () => {
   })
     .limit(10)
     .sort({ price: 1 })
-    .select({ name: 1, address: 1, category: 1, price: 1, owner: 1 });
+    .select({ name: 1, address: 1, category: 1, price: 1, owner: 1 })
+    // .count(); //just to return number if items that match a certain criteria;
+
   console.log(hotels);
 };
 
