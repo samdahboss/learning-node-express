@@ -47,7 +47,8 @@ const getCourses = async () => {
 
 // getCourses();
 
-const updateCourse = async (id) => {
+//update course using query first approach
+const updateCourseQueryFirst = async (id) => {
   const course = await Course.findById(id);
   if (!course) return "Course not found";
 
@@ -65,4 +66,29 @@ const updateCourse = async (id) => {
   console.log(updatedCourse);
 };
 
-updateCourse("67d575d300b416d58c3379bd");
+// updateCourseQueryFirst("67d575d300b416d58c3379bd");
+
+//update course using update first approach
+const updateCourseUpdateFirst = async (id) => {
+  const course = await Course.updateOne(
+    { _id: id },
+    {
+      $set: {
+        author: "Jesujoba",
+        isPublished: true,
+      },
+    }
+  );
+
+  console.log(course);
+};
+
+updateCourseUpdateFirst("67d575d300b416d58c3379bd");
+
+//remove course
+const removeCourse = async (id) => {
+  const course = await Course.deleteOne({ _id: id });
+  console.log(course);
+};
+
+// removeCourse("67d575d300b416d58c3379bd");
