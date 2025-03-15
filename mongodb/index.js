@@ -37,7 +37,7 @@ const createHotel = async (name, address, owner, price, category, tags) => {
   console.log(result);
 };
 
-// createHotel("Indiana Hotel", "Ondo", "Ned Okonkwo", 500000, "4 Star", [
+// createHotel("Indiana Hotel", "Ondo", "Alice Okonkwo", 500000, "2 Star", [
 //   "Luxury",
 //   "Expensive",
 // ]);
@@ -225,7 +225,9 @@ const getHotels = async () => {
   const hotels = await Hotel.find({
     $or: [
       { category: "4 Star", price: { $gte: 150, $lte: 1000 } },
-      { owner: "Alice Johnson" },
+      { owner: /^Alice/i }, // starts with alice, add i to make case insensitive
+      //   { owner: /Johnson$/i }, //ends with johnson
+      //   { owner: /.*Alice.*/i }, //contains alice at all, no matter the number of characters before and after
     ],
   })
     .limit(10)
